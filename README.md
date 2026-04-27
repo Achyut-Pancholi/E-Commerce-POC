@@ -29,6 +29,8 @@ php artisan storage:link
 php artisan serve
 ```
 
+> **SECURITY NOTE**: The downloaded `.env.example` and the default state have `APP_DEBUG` enabled. If deploying this application outside of a local environment, you **MUST** set `APP_DEBUG=false` inside your `.env` file to prevent the display of sensitive full-stack errors.
+
 ## Test Credentials
 
 **Admin User:**

@@ -68,7 +68,7 @@ class ProductController extends Controller
 
         $data = $request->except('image');
         if ($request->hasFile('image')) {
-            if ($product->image_path) {
+            if ($product->image_path && str_starts_with($product->image_path, 'products/')) {
                 \Illuminate\Support\Facades\Storage::disk('public')->delete($product->image_path);
             }
             $data['image_path'] = $request->file('image')->store('products', 'public');
@@ -81,7 +81,7 @@ class ProductController extends Controller
 
     public function destroy(\App\Models\Product $product)
     {
-        if ($product->image_path) {
+        if ($product->image_path && str_starts_with($product->image_path, 'products/')) {
             \Illuminate\Support\Facades\Storage::disk('public')->delete($product->image_path);
         }
         $product->delete();

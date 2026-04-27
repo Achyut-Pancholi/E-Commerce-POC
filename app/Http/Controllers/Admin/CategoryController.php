@@ -20,14 +20,14 @@ class CategoryController extends Controller
 
     public function store(\Illuminate\Http\Request $request)
     {
-        $request->validate([
+        $validatedData = $request->validate([
             'name' => 'required|max:255',
             'slug' => 'required|max:255|unique:categories,slug',
             'description' => 'nullable|string',
             'is_active' => 'boolean'
         ]);
 
-        \App\Models\Category::create($request->all());
+        \App\Models\Category::create($validatedData);
 
         return redirect()->route('admin.categories.index')->with('success', 'Category created successfully.');
     }
@@ -44,14 +44,14 @@ class CategoryController extends Controller
 
     public function update(\Illuminate\Http\Request $request, \App\Models\Category $category)
     {
-        $request->validate([
+        $validatedData = $request->validate([
             'name' => 'required|max:255',
             'slug' => 'required|max:255|unique:categories,slug,' . $category->id,
             'description' => 'nullable|string',
             'is_active' => 'boolean'
         ]);
 
-        $category->update($request->all());
+        $category->update($validatedData);
 
         return redirect()->route('admin.categories.index')->with('success', 'Category updated successfully.');
     }
