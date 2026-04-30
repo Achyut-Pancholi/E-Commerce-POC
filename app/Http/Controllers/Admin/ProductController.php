@@ -21,7 +21,7 @@ class ProductController extends Controller
 
     public function store(\Illuminate\Http\Request $request)
     {
-        $request->validate([
+        $validatedData = $request->validate([
             'name' => 'required|max:255',
             'slug' => 'required|max:255|unique:products,slug',
             'category_id' => 'required|exists:categories,id',
@@ -32,12 +32,13 @@ class ProductController extends Controller
             'is_active' => 'boolean'
         ]);
 
-        $data = $request->except('image');
         if ($request->hasFile('image')) {
-            $data['image_path'] = $request->file('image')->store('products', 'public');
+            $validatedData['image_path'] = $request->file('image')->store('products', 'public');
         }
+        
+        unset($validatedData['image']);
 
-        \App\Models\Product::create($data);
+        \App\Models\Product::create($validatedData);
 
         return redirect()->route('admin.products.index')->with('success', 'Product created successfully.');
     }
@@ -55,7 +56,7 @@ class ProductController extends Controller
 
     public function update(\Illuminate\Http\Request $request, \App\Models\Product $product)
     {
-        $request->validate([
+        $validatedData = $request->validate([
             'name' => 'required|max:255',
             'slug' => 'required|max:255|unique:products,slug,' . $product->id,
             'category_id' => 'required|exists:categories,id',
@@ -66,15 +67,16 @@ class ProductController extends Controller
             'is_active' => 'boolean'
         ]);
 
-        $data = $request->except('image');
         if ($request->hasFile('image')) {
             if ($product->image_path && str_starts_with($product->image_path, 'products/')) {
                 \Illuminate\Support\Facades\Storage::disk('public')->delete($product->image_path);
             }
-            $data['image_path'] = $request->file('image')->store('products', 'public');
+            $validatedData['image_path'] = $request->file('image')->store('products', 'public');
         }
 
-        $product->update($data);
+        unset($validatedData['image']);
+
+        $product->update($validatedData);
 
         return redirect()->route('admin.products.index')->with('success', 'Product updated successfully.');
     }
