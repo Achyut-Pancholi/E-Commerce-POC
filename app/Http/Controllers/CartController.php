@@ -18,6 +18,10 @@ class CartController extends Controller
 
     public function add(\Illuminate\Http\Request $request, \App\Models\Product $product)
     {
+        $request->validate([
+            'quantity' => 'required|integer|min:1'
+        ]);
+
         if (!$product->is_active || $product->stock_quantity < 1) {
             return back()->with('error', 'Product is not available.');
         }
@@ -50,6 +54,10 @@ class CartController extends Controller
 
     public function update(\Illuminate\Http\Request $request, \App\Models\Product $product)
     {
+        $request->validate([
+            'quantity' => 'required|integer|min:0'
+        ]);
+
         $quantity = $request->input('quantity');
         if ($quantity < 1) {
             return $this->remove($product);
