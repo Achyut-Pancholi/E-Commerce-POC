@@ -9,7 +9,7 @@
             @if($product->image_path)
                 <img src="{{ Storage::url($product->image_path) }}" class="img-fluid rounded" alt="{{ $product->name }}">
             @else
-                <img src="https://via.placeholder.com/600x400" class="img-fluid rounded" alt="Placeholder">
+                <img src="{{ asset('images/placeholder.png') }}" class="img-fluid rounded" alt="Product Image">
             @endif
         </div>
     </div>

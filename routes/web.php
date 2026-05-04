@@ -11,6 +11,8 @@ use App\Http\Controllers\User\UserOrderController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\UserController;
+
 
 // Public Routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -31,7 +33,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         if (Auth::user()->role === 'admin') {
             return redirect()->route('admin.dashboard');
         }
-        return redirect()->route('home');
+        return view('dashboard');
     })->name('dashboard');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -55,7 +57,9 @@ Route::middleware(['auth', 'is_admin'])->prefix('admin')->name('admin.')->group(
     Route::resource('categories', CategoryController::class);
     Route::resource('products', ProductController::class);
     
+    Route::resource('users', UserController::class);
     Route::get('orders', [OrderController::class, 'index'])->name('orders.index');
+
     Route::get('orders/{order}', [OrderController::class, 'show'])->name('orders.show');
     Route::patch('orders/{order}/status', [OrderController::class, 'updateStatus'])->name('orders.updateStatus');
 });

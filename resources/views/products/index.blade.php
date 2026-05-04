@@ -44,7 +44,7 @@
                         @if($product->image_path)
                             <img src="{{ Storage::url($product->image_path) }}" class="card-img-top" alt="{{ $product->name }}">
                         @else
-                            <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="Placeholder">
+                            <img src="{{ asset('images/placeholder.png') }}" class="card-img-top" alt="Product Image">
                         @endif
                         <div class="card-body">
                             <h5 class="card-title">{{ $product->name }}</h5>

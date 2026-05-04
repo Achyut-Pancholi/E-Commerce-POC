@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard | E-Commerce POC</title>
+    <title>Admin Dashboard | KL ecommerce</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
@@ -21,7 +21,9 @@
             <a href="{{ route('admin.dashboard') }}"><i class="fas fa-tachometer-alt me-2"></i> Dashboard</a>
             <a href="{{ route('admin.categories.index') }}"><i class="fas fa-list me-2"></i> Categories</a>
             <a href="{{ route('admin.products.index') }}"><i class="fas fa-box me-2"></i> Products</a>
+            <a href="{{ route('admin.users.index') }}"><i class="fas fa-users me-2"></i> Customers</a>
             <a href="{{ route('admin.orders.index') }}"><i class="fas fa-shopping-cart me-2"></i> Orders</a>
+
             <hr class="text-secondary">
             <a href="{{ route('home') }}" target="_blank"><i class="fas fa-external-link-alt me-2"></i> View Store</a>
             <form action="{{ route('logout') }}" method="POST" class="mt-2">
